@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiko/home.dart';
+import 'package:tiko/shapes/shapes_home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: ShapesHomeScreen(),
     );
   }
 }
