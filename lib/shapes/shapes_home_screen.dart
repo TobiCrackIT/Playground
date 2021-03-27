@@ -7,10 +7,36 @@ class ShapesHomeScreen extends StatefulWidget {
   _ShapesHomeScreenState createState() => _ShapesHomeScreenState();
 }
 
-class _ShapesHomeScreenState extends State<ShapesHomeScreen> {
+class _ShapesHomeScreenState extends State<ShapesHomeScreen>
+    with TickerProviderStateMixin {
   var _sides = 3.0;
   var _radius = 100.0;
   var _radians = 0.0;
+
+  Animation<double> animation;
+  AnimationController controller;
+  Tween<double> _rotationTween = Tween(begin: -math.pi, end: math.pi);
+
+  @override
+  void initState() {
+    super.initState();
+
+    animation =
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
+    animation = _rotationTween.animate(controller)
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.repeat();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
+
+    controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +49,7 @@ class _ShapesHomeScreenState extends State<ShapesHomeScreen> {
         children: [
           Expanded(
             child: CustomPaint(
-              painter: ShapePainter(),
+              painter: ShapePainter(sides: _sides,radius: _radius,radians: animation.value),
               child: Container(),
             ),
           ),
